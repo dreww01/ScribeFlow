@@ -20,6 +20,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# Pre-download the Whisper model to bake it into the image
+RUN python3 -c "from faster_whisper import WhisperModel; WhisperModel('small', device='cpu', compute_type='int8')"
+
 # Create necessary directories
 RUN mkdir -p videos audio outputs subtitles fonts temp
 
