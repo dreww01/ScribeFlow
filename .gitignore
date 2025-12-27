@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv
+venv/
+
+# Environment Variables
+.env
+
+# Media Files (Don't commit large files)
+videos/*
+!videos/.gitkeep
+audio/*
+!audio/.gitkeep
+outputs/*
+!outputs/.gitkeep
+subtitles/*
+!subtitles/.gitkeep
+temp/*
+!temp/.gitkeep
+
+# IDEs
+.vscode/
+.idea/
+
+# Agent
+.agent/
