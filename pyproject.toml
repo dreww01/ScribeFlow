@@ -1,11 +1,17 @@
 [project]
 name = "scribeflow"
 version = "0.1.0"
-description = "Add your description here"
+description = "Automatic video subtitle generator using Whisper AI and FFmpeg"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
-    "app>=0.0.1",
-    "pytest>=9.0.2",
+    "faster-whisper>=1.1.1",
+    "ffmpeg-python>=0.2.0",
+    "pysrt",
+    "fastapi",
+    "uvicorn[standard]",
     "python-multipart>=0.0.21",
+    "httpx",
+    "numpy>=1.23.0",
+    "pytest>=9.0.2",
 ]
