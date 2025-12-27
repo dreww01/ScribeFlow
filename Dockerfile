@@ -23,7 +23,7 @@ COPY . .
 RUN mkdir -p videos audio outputs subtitles fonts temp
 
 # Expose the API port
-EXPOSE 5000
+EXPOSE 8080
 
 # Run the application
 CMD ["python", "run.py"]
