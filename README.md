@@ -78,9 +78,9 @@ cd ScribeFlow
 
 # Build and run with Docker
 docker build -t scribeflow .
-docker run -p 5000:5000 scribeflow
+docker run -p 8080:8080 scribeflow
 
-# Access the API at http://localhost:5000/docs
+# Access the API at http://localhost:8080/docs
 ```
 
 ### Local Installation
@@ -101,7 +101,7 @@ pip install -r requirements.txt
 python run.py
 ```
 
-Visit [http://localhost:5000/docs](http://localhost:5000/docs) for interactive API documentation.
+Visit [http://localhost:8080/docs](http://localhost:8080/docs) for interactive API documentation.
 
 ---
 
@@ -168,13 +168,13 @@ sudo apt install ffmpeg
 python run.py
 
 # Method 2: Using uvicorn directly
-uvicorn app.main:app --host 0.0.0.0 --port 5000 --reload
+uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
 
 # Method 3: Production mode (no reload)
-uvicorn app.main:app --host 0.0.0.0 --port 5000 --workers 4
+uvicorn app.main:app --host 0.0.0.0 --port 8080 --workers 4
 ```
 
-The server will start on `http://localhost:5000`
+The server will start on `http://localhost:8080`
 
 ### API Endpoints
 
@@ -184,7 +184,7 @@ Upload a video and generate subtitles with custom configuration.
 
 **Request:**
 ```bash
-curl -X POST "http://localhost:5000/generate" \
+curl -X POST "http://localhost:8080/generate" \
   -F "video=@your_video.mp4" \
   -F 'config_json={"language":"en","subtitle_color":"yellow","font_size":24,"max_words_per_line":5,"use_gpu":false}'
 ```
@@ -194,7 +194,7 @@ curl -X POST "http://localhost:5000/generate" \
 import requests
 import json
 
-url = "http://localhost:5000/generate"
+url = "http://localhost:8080/generate"
 
 config = {
     "language": "en",
@@ -238,14 +238,17 @@ with open("output_with_subtitles.mp4", "wb") as f:
 
 FastAPI provides automatic interactive documentation:
 
-- **Swagger UI**: [http://localhost:5000/docs](http://localhost:5000/docs)
-- **ReDoc**: [http://localhost:5000/redoc](http://localhost:5000/redoc)
+- **Swagger UI**: [http://localhost:8080/docs](http://localhost:8080/docs)
+- **ReDoc**: [http://localhost:8080/redoc](http://localhost:8080/redoc)
 
 ---
 
 ## 🐳 Docker Deployment
 
 ### Build and Run Locally
+
+> [!NOTE]
+> The Whisper "small" model is pre-baked into the Docker image, ensuring fast startup and no runtime dependencies on Hugging Face.
 
 ```bash
 # Build the image
@@ -254,16 +257,12 @@ docker build -t scribeflow:latest .
 # Run the container
 docker run -d \
   --name scribeflow \
-  -p 5000:5000 \
+  -p 8080:8080 \
   -v $(pwd)/outputs:/app/outputs \
   scribeflow:latest
-
-# View logs
-docker logs -f scribeflow
-
-# Stop the container
-docker stop scribeflow
 ```
+
+For more advanced Docker usage, see [docs/docker.md](docs/docker.md).
 
 ### Docker Compose (Coming Soon)
 
@@ -337,7 +336,10 @@ ScribeFlow/
 ├── .dockerignore          # Docker build exclusions
 ├── .gitignore             # Git exclusions
 ├── architecture.md        # Detailed architecture documentation
-├── deployment.md          # Deployment guides
+├── docs/                  # Project documentation
+│   ├── deployment.md      # Deployment guides
+│   ├── gcp-setup.md       # GCP specific setup
+│   └── docker.md          # Docker guide
 ├── Dockerfile             # Container configuration
 ├── LICENSE                # MIT License
 ├── pyproject.toml         # Python project metadata
@@ -580,7 +582,7 @@ If you find ScribeFlow useful, please consider giving it a star ⭐ on GitHub!
 
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/dreww01/ScribeFlow/issues)
 - 💡 **Feature Requests**: [GitHub Issues](https://github.com/dreww01/ScribeFlow/issues)
-- 📖 **Documentation**: [Architecture Guide](architecture.md) | [Deployment Guide](deployment.md)
+- 📖 **Documentation**: [Architecture Guide](architecture.md) | [Deployment Guide](docs/deployment.md) | [Docker Guide](docs/docker.md)
 - 💬 **Community**: [GitHub Discussions](https://github.com/dreww01/ScribeFlow/discussions)
 
 ---

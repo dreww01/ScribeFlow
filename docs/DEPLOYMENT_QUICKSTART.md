@@ -68,8 +68,10 @@ gcloud run services describe scribeflow --region us-central1 --format 'value(sta
 ### Manual Deploy
 ```bash
 gcloud run deploy scribeflow \
-  --image us-docker.pkg.dev/PROJECT_ID/scribeflow/scribeflow:latest \
+  --image us-central1-docker.pkg.dev/PROJECT_ID/scribeflow/scribeflow:latest \
   --region us-central1 \
+  --port 8080 \
+  --memory 4Gi \
   --allow-unauthenticated
 ```
 
@@ -97,4 +99,4 @@ gcloud run deploy scribeflow \
 
 ---
 
-For detailed instructions, see [docs/gcp-setup.md](../docs/gcp-setup.md)
+For detailed instructions, see [docs/gcp-setup.md](gcp-setup.md)
