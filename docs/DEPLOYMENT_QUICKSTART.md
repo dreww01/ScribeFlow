@@ -12,27 +12,37 @@ Follow these steps once to set up automated deployment:
 ### 2. Enable APIs
 ```bash
 gcloud services enable run.googleapis.com
-gcloud services enable containerregistry.googleapis.com
+gcloud services enable artifactregistry.googleapis.com
 gcloud services enable cloudbuild.googleapis.com
 ```
 
 Or enable manually in GCP Console → APIs & Services → Library
 
-### 3. Create Service Account
+### 3. Create Artifact Registry Repository
+```bash
+gcloud artifacts repositories create scribeflow \
+  --repository-format=docker \
+  --location=us \
+  --description="ScribeFlow Docker images"
+```
+
+Or create manually in GCP Console → Artifact Registry → Create Repository
+
+### 4. Create Service Account
 - [ ] Go to **IAM & Admin** → **Service Accounts**
 - [ ] Create service account: `github-actions-deployer`
 - [ ] Add roles:
   - `Cloud Run Admin`
   - `Service Account User`
-  - `Storage Admin`
+  - `Artifact Registry Writer`
 - [ ] Create JSON key and download it
 
-### 4. Configure GitHub Secrets
+### 5. Configure GitHub Secrets
 - [ ] Go to GitHub repo → **Settings** → **Secrets and variables** → **Actions**
 - [ ] Add secret `GCP_PROJECT_ID` = your project ID
 - [ ] Add secret `GCP_SA_KEY` = entire JSON key contents
 
-### 5. Deploy!
+### 6. Deploy!
 ```bash
 git add .
 git commit -m "Initial deployment"
@@ -58,7 +68,7 @@ gcloud run services describe scribeflow --region us-central1 --format 'value(sta
 ### Manual Deploy
 ```bash
 gcloud run deploy scribeflow \
-  --image gcr.io/PROJECT_ID/scribeflow:latest \
+  --image us-docker.pkg.dev/PROJECT_ID/scribeflow/scribeflow:latest \
   --region us-central1 \
   --allow-unauthenticated
 ```
@@ -69,8 +79,9 @@ gcloud run deploy scribeflow \
 
 | Issue | Solution |
 |-------|----------|
-| Permission denied | Check service account roles |
-| API not enabled | Enable required APIs, wait 2 minutes |
+| Permission denied | Check service account has `Artifact Registry Writer` role |
+| API not enabled | Enable `artifactregistry.googleapis.com`, wait 2 minutes |
+| Repository not found | Create Artifact Registry repository (step 3) |
 | Build fails | Check Dockerfile and requirements.txt |
 | 404 on URL | Check Cloud Run logs for errors |
 
