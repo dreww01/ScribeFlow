@@ -14,6 +14,7 @@ class ModelManager:
     _instance = None
     _device = "cpu"
 
+
     @classmethod
     def load_model(cls, use_gpu: bool = True):
         device = "cuda" if use_gpu else "cpu"

@@ -11,6 +11,7 @@ from app.services import ModelManager, extract_audio, generate_subtitles, create
 from app.schemas import SubtitleConfig
 from app.config import TEMP_DIR, AUDIO_DIR, ASS_DIR, OUTPUT_DIR
 
+
 # Setup Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("uvicorn")

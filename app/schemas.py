@@ -18,6 +18,7 @@ class SubtitleConfig(BaseModel):
         description="FFmpeg encoding preset. 'ultrafast' is fastest but larger file size. 'medium' is default balance."
     )
 
+
     @property
     def alignment(self) -> int:
         alignment_map = {"1": 2, "2": 5, "3": 8, "4": 5}
