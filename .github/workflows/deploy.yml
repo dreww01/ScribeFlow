@@ -51,8 +51,9 @@ jobs:
             --allow-unauthenticated \
             --memory 2Gi \
             --cpu 2 \
-            --timeout 300 \
+            --timeout 600 \
             --max-instances 10 \
+            --cpu-boost \
             --set-env-vars "ENVIRONMENT=production"
 
       - name: Get Service URL

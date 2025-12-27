@@ -18,15 +18,10 @@ logger = logging.getLogger("uvicorn")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Load Model
-    logger.info("Startup: Pre-loading Whisper model...")
-    # Pre-load on GPU by default if available
-    try:
-        ModelManager.load_model(use_gpu=True)
-    except Exception as e:
-        logger.warning(f"Startup model load failed: {e}")
+    # Startup logic
+    logger.info("Startup: ScribeFlow API is starting...")
     yield
-    # Shutdown logic (if any)
+    # Shutdown logic
     logger.info("Shutdown: Cleaning up...")
 
 app = FastAPI(title="ScribeFlow API", lifespan=lifespan)
