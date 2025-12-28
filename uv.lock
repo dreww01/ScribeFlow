@@ -939,6 +939,7 @@ dependencies = [
     { name = "numpy", version = "2.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "pysrt" },
     { name = "pytest" },
+    { name = "python-dotenv" },
     { name = "python-multipart" },
     { name = "uvicorn", extra = ["standard"] },
 ]
@@ -952,6 +953,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=1.23.0" },
     { name = "pysrt" },
     { name = "pytest", specifier = ">=9.0.2" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
     { name = "python-multipart", specifier = ">=0.0.21" },
     { name = "uvicorn", extras = ["standard"] },
 ]

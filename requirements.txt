@@ -9,3 +9,4 @@ httpx
 
 # Optional but useful
 numpy>=1.23.0
+python-dotenv

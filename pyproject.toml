@@ -14,4 +14,5 @@ dependencies = [
     "httpx",
     "numpy>=1.23.0",
     "pytest>=9.0.2",
+    "python-dotenv>=1.2.1",
 ]

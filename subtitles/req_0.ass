@@ -7,8 +7,11 @@ ScaledBorderAndShadow:yes
 
 [V4+ Styles]
 Format: Name,Fontname,Fontsize,PrimaryColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
-Style: Default,Playfair Display,24,&H0000FFFF,400,0,0,0,100,100,0,0,1,2,1.0,2,10,10,30,1
+Style: Default,Playfair Display,48,&H000000FF,400,0,0,0,100,100,0,0,1,2,1.0,2,10,10,30,1
 
 [Events]
 Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text
-Dialogue: 0,0:00:00.00,0:00:02.00,Default,,0,0,0,,BEEP
+Dialogue: 0,0:00:00.00,0:00:02.33,Default,,0,0,0,,Behold! My field unto which I
+Dialogue: 0,0:00:02.33,0:00:04.66,Default,,0,0,0,,grow my fox. Notice that it
+Dialogue: 0,0:00:04.66,0:00:06.99,Default,,0,0,0,,is barren, for I have no
+Dialogue: 0,0:00:06.99,0:00:08.16,Default,,0,0,0,,fox to give.
