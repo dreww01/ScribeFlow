@@ -4,7 +4,7 @@ import json
 import logging
 import uvicorn
 from contextlib import asynccontextmanager
-from typing import Annotated
+from typing import Annotated, Literal
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends
 from fastapi.responses import FileResponse
 from app.services import ModelManager, extract_audio, generate_subtitles, create_ass_file, burn_subtitles
@@ -30,15 +30,40 @@ app = FastAPI(title="ScribeFlow API", lifespan=lifespan)
 async def root():
     return {"message": "Welcome to ScribeFlow API. Go to /docs for the interface."}
 
+def get_subtitle_config(
+    max_words_per_line: int = Form(6, ge=1, description="Maximum words per subtitle line"),
+    subtitle_color: str = Form("#FFFFFF", description="Font color in Hex or name"),
+    font_weight: int = Form(400, ge=100, le=900, description="Font weight (100-900)"),
+    font_size: int = Form(48, ge=1, description="Font size"),
+    shadow_strength: float = Form(1.0, ge=0, description="Shadow strength"),
+    enable_bounce: bool = Form(False, description="Enable bounce entry effect"),
+    lang: str = Form("en", description="Audio language code (e.g., 'en', 'th')"),
+    position: Literal["1", "2", "3", "4"] = Form("1", description="1=Bottom, 2=Middle, 3=Top, 4=Offset Bottom"),
+    use_gpu: bool = Form(True, description="Enable GPU acceleration for transcription"),
+    video_encoding_preset: Literal["ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow"] = Form(
+        "ultrafast", 
+        description="FFmpeg encoding preset. 'ultrafast' is fastest but larger file size."
+    )
+) -> SubtitleConfig:
+    return SubtitleConfig(
+        max_words_per_line=max_words_per_line,
+        subtitle_color=subtitle_color,
+        font_weight=font_weight,
+        font_size=font_size,
+        shadow_strength=shadow_strength,
+        enable_bounce=enable_bounce,
+        lang=lang,
+        position=position,
+        use_gpu=use_gpu,
+        video_encoding_preset=video_encoding_preset
+    )
+
 @app.post("/generate")
 async def generate_video(
     video: Annotated[UploadFile, File(description="Video file to process")],
-    config_json: Annotated[str, Form(description="JSON string of SubtitleConfig")] = '{}'
+    settings: Annotated[SubtitleConfig, Depends(get_subtitle_config)]
 ):
     try:
-        # Parse Config
-        config_data = json.loads(config_json)
-        settings = SubtitleConfig(**config_data)
         
         # unique ID for this request
         timestamp = str(int(os.times().elapsed * 100)) # using simplified timestamp
