@@ -103,6 +103,9 @@ python run.py
 
 Visit [http://localhost:8080/docs](http://localhost:8080/docs) for interactive API documentation.
 
+> [!TIP]
+> **Local Testing**: To bind explicitly to localhost instead of `0.0.0.0`, run with `HOST=127.0.0.1 python run.py` (or set `HOST=127.0.0.1` in your `.env` file).
+
 ---
 
 ## 📦 Installation

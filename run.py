@@ -1,14 +1,22 @@
 import os
 import uvicorn
+import logging
 from dotenv import load_dotenv
+
+# Setup Logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger("scribeflow")
 
 # Load variables from .env file
 load_dotenv()
 
 if __name__ == "__main__":
-    # Check for both PORT and port, default to 8080
-    port_val = os.environ.get("PORT") or os.environ.get("port") or 8080
-    port = int(port_val)
+    # Check for PORT (standard for Cloud Run) and HOST
+    port = int(os.environ.get("PORT", 8080))
+    host = os.environ.get("HOST", "0.0.0.0")
     
-    print(f"Starting server on port {port}...")
-    uvicorn.run("app.main:app", host="127.0.0.1", port=port, reload=False)
+    logger.info(f"Starting server on http://{'localhost' if host == '0.0.0.0' else host}:{port}")
+    uvicorn.run("app.main:app", host=host, port=port, reload=False)

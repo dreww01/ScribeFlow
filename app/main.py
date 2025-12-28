@@ -102,10 +102,10 @@ async def generate_video(
         return FileResponse(output_video_path, media_type="video/mp4", filename=f"subbed_{video.filename}")
 
     except Exception as e:
-        logger.error(f"Processing error: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.exception(f"Processing error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8080))
+    host = os.environ.get("HOST", "0.0.0.0")
+    uvicorn.run("app.main:app", host=host, port=port, reload=True)
