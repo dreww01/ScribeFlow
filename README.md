@@ -244,6 +244,9 @@ FastAPI provides automatic interactive documentation:
 - **Swagger UI**: [http://localhost:8080/docs](http://localhost:8080/docs)
 - **ReDoc**: [http://localhost:8080/redoc](http://localhost:8080/redoc)
 
+<img width="1860" height="935" alt="scribe flow api" src="https://github.com/user-attachments/assets/81500fad-81a0-49ec-aa93-1f4654f0a420" />
+
+
 ---
 
 ## 🐳 Docker Deployment
